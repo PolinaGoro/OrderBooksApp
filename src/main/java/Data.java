@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Data {
 
     private HashSet<Book> books = new HashSet<>();
-    private ArrayList<Order> orders = new ArrayList<>();
+    private HashMap<String,Order> orders = new HashMap<>();
 
     public HashSet<Book> getBooks() {
         return books;
@@ -14,11 +15,11 @@ public class Data {
         this.books = books;
     }
 
-    public ArrayList<Order> getOrders() {
+    public HashMap<String,Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(ArrayList<Order> orders) {
+    public void setOrders(HashMap<String,Order> orders) {
         this.orders = orders;
     }
 }
