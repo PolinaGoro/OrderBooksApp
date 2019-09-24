@@ -46,13 +46,22 @@ public class Book {
     @Override
     public String toString() {
         String info = "";
-        info +=  this.author + "/n" + this.name + "/n" + this.price;
+        info +=  this.author + "\n" + this.name + "\n" + this.price;
         return info;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        int rezult = price;
+        for(int i = 0; i < name.length();i++)
+        {
+            rezult += (int)name.charAt(i);
+        }
+        for(int i = 0; i < author.length();i++)
+        {
+            rezult += (int)author.charAt(i);
+        }
+        return rezult;
     }
 
     @Override
@@ -60,7 +69,7 @@ public class Book {
         if(obj instanceof Book)
         {
             Book other = (Book) obj;
-            return (this.name == other.name && this.author == other.author && this.price == other.price);
+            return (this.name.equals(other.name) && this.author.equals(other.author) && this.price == other.price);
         }
         return false;
     }

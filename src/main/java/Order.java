@@ -103,15 +103,19 @@ public class Order {
                     }
                 }*/
                 for (Book s : baseOfbooks) {
-                    if(s.getAuthor() == author)System.out.println("Автор: " + s.getAuthor() + " Название: " + s.getName() + " Цена: " + s.getPrice());
+                    if(s.getAuthor().equals(author))
+                    {
+                        System.out.println("Автор: " + s.getAuthor() + " Название: " + s.getName() + " Цена: " + s.getPrice());
+                    }
                 }
 
                 System.out.println("А теперь введите название: ");
                 String name = scan.nextLine();
-                Book orderBook = new Book(author, name, 0);
+                Book orderBook = new Book(author, name);
+                Iterator <Book> iter = baseOfbooks.iterator();
                 boolean out = false;
-                while (!baseOfbooks.isEmpty()) {
-                    if (baseOfbooks.equals(orderBook)) {
+                while (iter.hasNext()) {
+                    if (iter.next().equals(orderBook)) {
                         System.out.println("Книга по данному запросу найдена!\n" + orderBook.toString());
                        order.setBooks(orderBook);
                         out = true;
