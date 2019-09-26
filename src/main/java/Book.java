@@ -64,12 +64,22 @@ public class Book {
         return rezult;
     }
 
+
+    public boolean equals(Object obj, boolean isPrice) {
+        if(obj instanceof Book)
+        {
+            Book other = (Book) obj;
+            return (this.name.equals(other.name) && this.author.equals(other.author) && this.price == other.price);
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Book)
         {
             Book other = (Book) obj;
-            return (this.name.equals(other.name) && this.author.equals(other.author) && this.price == other.price);
+            return (this.name.equals(other.name) && this.author.equals(other.author));
         }
         return false;
     }

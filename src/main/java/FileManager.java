@@ -13,7 +13,6 @@ public class FileManager {
         readFile(path);
     }
 
-    //неповторимый оригинал
 
     private void readFile(String path) {
         try (FileReader read = new FileReader(path)) {
@@ -29,20 +28,6 @@ public class FileManager {
         }
     }
 
-   /* private void readFileBook(String path) {
-        try (FileReader read = new FileReader(path)) {
-            Scanner scan = new Scanner(read);
-            StringBuilder text = new StringBuilder();
-            while (scan.hasNextLine()) {
-                text.append(scan.nextLine());
-            }
-            Gson gson = new Gson();
-            data.setBooks(gson.fromJson(text.toString(), Book.class));
-        } catch (Exception a) {
-            System.out.println("Файл пуст. Проверьте содержимое.");
-        }
-    }
-    */
 
     public void save(String path) {
         try (FileWriter writer = new FileWriter(path)) {

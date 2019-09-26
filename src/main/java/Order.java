@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -10,17 +7,16 @@ public class Order {
     }
 
     private String clientNumber = "";
-    private String inProgress = "";
+    private String inProgress = "Ждет обработки";
     private ArrayList<Book> books = new ArrayList();
-
-    public Order(String inProgress, ArrayList<Book> books) {
-        this.inProgress = inProgress;
-        this.books = books;
-    }
 
     public Order(String clientNumber, String inProgress, ArrayList<Book> books) {
         this.clientNumber = clientNumber;
         this.inProgress = inProgress;
+        this.books = books;
+    }
+    public Order(String clientNumber, ArrayList<Book> books) {
+        this.clientNumber = clientNumber;
         this.books = books;
     }
 
@@ -52,6 +48,25 @@ public class Order {
         this.books.add(book);
     }
 
+   @Override
+    public int hashCode() {
+
+        int rezult = 0;
+        for (Book a : books)
+        {
+            rezult += a.hashCode();
+        }
+        for(int i = 0; i < clientNumber.length();i++)
+        {
+            rezult += (int)clientNumber.charAt(i);
+        }
+        for(int i = 0; i < inProgress.length();i++)
+        {
+            rezult += (int)inProgress.charAt(i);
+        }
+        return rezult;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Order) {
@@ -64,20 +79,14 @@ public class Order {
     @Override
     public String toString() {
         String info = "";
-        info += (this.clientNumber.toString() + this.inProgress.toString());
+        info += (this.clientNumber.toString() + "\n" + this.inProgress.toString() + "\n");
         for (int i = 0; i < books.size(); i++) {
             info += books.get(i).toString();
         }
         return info;
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
     public static void createOrder(HashSet<Book> baseOfbooks, Order order) {
-        //System.out.println("");
         Scanner scan = new Scanner(System.in);
 
         while (true) {
@@ -94,14 +103,7 @@ public class Order {
                 String author = scan.nextLine();
 
                 System.out.println("Произведения данного автора: ");
-               /* for (Iterator<Book> it = baseOfbooks.iterator(); it.hasNext(); ) {
-                    Book searchPoint = it.next();
-                    if (searchPoint.getAuthor() == author) {
-                       if (searchPoint.getAuthor() == author) {
-                        System.out.println(searchPoint.toString());
-                        }
-                    }
-                }*/
+
                 for (Book s : baseOfbooks) {
                     if(s.getAuthor().equals(author))
                     {
@@ -115,9 +117,12 @@ public class Order {
                 Iterator <Book> iter = baseOfbooks.iterator();
                 boolean out = false;
                 while (iter.hasNext()) {
-                    if (iter.next().equals(orderBook)) {
+                    Book a = iter.next();
+                    if (a.equals(orderBook)) {
+                        orderBook.setPrice(a.getPrice());
+                        order.setBooks(orderBook);
+                        order.setClientNumber(number);
                         System.out.println("Книга по данному запросу найдена!\n" + orderBook.toString());
-                       order.setBooks(orderBook);
                         out = true;
                         break;
                     }
@@ -125,11 +130,33 @@ public class Order {
                 if (out != true) throw (new Exception());
                 else break;
             } catch (Exception a) {
-                System.out.println("Некорректные данные! Желаете попробовать снова?(Введите Y/N)");
+               String but;
+                while(true) {
+                    System.out.println("Некорректные данные! Желаете попробовать снова?(Введите Y/N)");
 
-                String but = scan.nextLine();
+                    but = scan.nextLine().toUpperCase().trim();
+                    if (but.equals("N") || but.equals("Y")) break;
+                }
                 if (but.equals("N")) break;
             }
+        }
+    }
+
+    public static void watchOrders( HashMap <String, Order> orders)
+    {
+
+        for( Order obj : orders.values())
+        {
+            System.out.println(obj.toString());
+        }
+    }
+
+    public static void watchOrders( Map <String, Order> orders, String number)
+    {
+        for( Order obj : orders.values())
+        {
+            if(obj.getClientNumber().equals(number))
+            System.out.println(obj.toString());
         }
     }
 }
